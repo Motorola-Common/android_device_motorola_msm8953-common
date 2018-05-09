@@ -195,11 +195,6 @@ BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy
 # Sensor
 USE_SENSOR_MULTI_HAL := true
 
-# Shim
-TARGET_LD_SHIM_LIBS := \
-    /system/vendor/bin/adspd|libshim_adsp.so \
-    /system/vendor/lib64/libmdmcutback.so|libqsap_shim.so
-
 # Thermal
 USE_DEVICE_SPECIFIC_THERMAL := true
 
