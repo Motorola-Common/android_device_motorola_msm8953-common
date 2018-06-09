@@ -19,7 +19,7 @@
 set -e
 
 # Required!
-DEVICE=potter
+COMMON_DEVICE=8953-common
 VENDOR=motorola
 
 INITIAL_COPYRIGHT_YEAR=2017
@@ -37,11 +37,11 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-# Initialize the helper for device
-setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT" true
+# Initialize the helper
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$LINEAGE_ROOT" true
 
 # Copyright headers and guards
-write_headers "potter"
+write_headers "cedric potter montana sanders"
 
 # The standard blobs
 write_makefiles "$MY_DIR"/proprietary-files.txt
@@ -59,6 +59,7 @@ if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
 
     # The standard device blobs
     write_makefiles "$MY_DIR"/../$DEVICE/proprietary-files.txt
+    write_makefiles "$MY_DIR"/../$DEVICE/proprietary-files64.txt
 
     # We are done!
     write_footers

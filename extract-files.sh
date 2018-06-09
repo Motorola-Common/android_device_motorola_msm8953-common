@@ -18,7 +18,7 @@
 
 set -e
 
-DEVICE=potter
+COMMON_DEVICE=8953-common
 VENDOR=motorola
 
 # Load extract_utils and do some sanity checks
@@ -34,19 +34,18 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-# Default to sanitizing the vendor folder before extraction
-CLEAN_VENDOR=true
+# Default to NOT sanitizing the vendor folder before extraction
+CLEAN_VENDOR=false
 
 while [ "$1" != "" ]; do
     case $1 in
-        -p | --path )           shift
-                                SRC=$1
+        -n | --no-cleanup )     CLEAN_VENDOR=false
                                 ;;
         -s | --section )        shift
                                 SECTION=$1
                                 CLEAN_VENDOR=false
                                 ;;
-        -n | --no-cleanup )     CLEAN_VENDOR=false
+        * )                     SRC=$1
                                 ;;
     esac
     shift
@@ -56,16 +55,18 @@ if [ -z "$SRC" ]; then
     SRC=adb
 fi
 
-# Initialize the helper for device
-setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT" true "$CLEAN_VENDOR"
+# Initialize the helper
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$LINEAGE_ROOT" true "$CLEAN_VENDOR"
 
 extract "$MY_DIR"/proprietary-files.txt "$SRC" "$SECTION"
+extract "$MY_DIR"/proprietary-files64.txt "$SRC" "$SECTION"
 
 if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
     # Reinitialize the helper for device
     setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT" false "$CLEAN_VENDOR"
 
     extract "$MY_DIR"/../$DEVICE/proprietary-files.txt "$SRC" "$SECTION"
+    extract "$MY_DIR"/../$DEVICE/proprietary-files64.txt "$SRC" "$SECTION"
 fi
 
 "$MY_DIR"/setup-makefiles.sh

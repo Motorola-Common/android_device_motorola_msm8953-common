@@ -1,6 +1,7 @@
 #
 # Copyright (C) 2016 The CyanogenMod Project
 # Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2018 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,9 +32,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.camera.full.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.full.xml \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.fingerprint.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.location.gps.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hce.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hcef.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hcef.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.accelerometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.gyroscope.xml \
@@ -62,7 +60,7 @@ PRODUCT_AAPT_CONFIG := normal
 
 # Audio
 PRODUCT_PACKAGES += \
-    audio.primary.msm8953 \
+    audio.primary.$(TARGET_BOARD_PLATFORM) \
     audio.a2dp.default \
     audio.usb.default \
     audio.r_submix.default \
@@ -86,10 +84,6 @@ PRODUCT_COPY_FILES +=  \
     $(LOCAL_PATH)/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/audio/audio_policy.conf:system/vendor/etc/audio_policy.conf \
     $(LOCAL_PATH)/audio/audio_output_policy.conf:system/vendor/etc/audio_output_policy.conf \
-    $(LOCAL_PATH)/audio/audio_platform_info_extcodec.xml:system/vendor/etc/audio_platform_info_extcodec.xml \
-    $(LOCAL_PATH)/audio/mixer_paths.xml:system/vendor/etc/mixer_paths.xml \
-    $(LOCAL_PATH)/audio/audio_ext_spkr.conf:system/vendor/etc/audio_ext_spkr.conf \
-    $(LOCAL_PATH)/audio/audio_platform_info.xml:system/vendor/etc/audio_platform_info.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:system/vendor/etc/sound_trigger_mixer_paths.xml \
     $(LOCAL_PATH)/audio/sound_trigger_platform_info.xml:system/vendor/etc/sound_trigger_platform_info.xml
 
@@ -109,14 +103,7 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.camera.device@1.0 \
     vendor.qti.hardware.camera.device@1.0_vendor
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/camera/msm8953_mot_potter_camera.xml:system/etc/camera/msm8953_mot_potter_camera.xml \
-    $(LOCAL_PATH)/configs/camera/mot_ov5695_chromatix.xml:system/etc/camera/mot_ov5695_chromatix.xml \
-    $(LOCAL_PATH)/configs/camera/mot_imx362_chromatix.xml:system/etc/camera/mot_imx362_chromatix.xml \
-    $(LOCAL_PATH)/configs/camera/mot_s5k2l7_chromatix.xml:system/etc/camera/mot_s5k2l7_chromatix.xml \
-    $(LOCAL_PATH)/configs/camera/mot_s5k2l7sa_chromatix.xml:system/etc/camera/mot_s5k2l7sa_chromatix.xml \
-    $(LOCAL_PATH)/configs/camera/vfwconfig.json:system/etc/camera/vfwconfig.json
-
+# GPS Config
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/flp.conf:system/vendor/etc/flp.conf \
     $(LOCAL_PATH)/gps/etc/gps.conf:system/vendor/etc/gps.conf \
@@ -132,8 +119,8 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
-    copybit.msm8953 \
-    gralloc.msm8953 \
+    copybit.$(TARGET_BOARD_PLATFORM) \
+    gralloc.$(TARGET_BOARD_PLATFORM) \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-impl \
@@ -142,14 +129,12 @@ PRODUCT_PACKAGES += \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     android.hardware.configstore@1.0-service \
-    hwcomposer.msm8953 \
-    memtrack.msm8953 \
+    hwcomposer.$(TARGET_BOARD_PLATFORM) \
+    memtrack.$(TARGET_BOARD_PLATFORM) \
     libgenlock \
     libtinyxml \
     libdisplayconfig \
-    libqdMetaData.system \
-    vendor.display.config@1.0 \
-    vendor.display.config@1.0_vendor
+    libqdMetaData.system
 
 PRODUCT_PACKAGES += android.hardware.media.omx
 
@@ -176,7 +161,7 @@ PRODUCT_PACKAGES += \
 # Fingerprint
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service_32 \
-    fingerprint.msm8953
+    fingerprint.$(TARGET_BOARD_PLATFORM)
 
 # FM
 PRODUCT_PACKAGES += \
@@ -220,8 +205,8 @@ PRODUCT_COPY_FILES += \
 
 # Keymaster HAL
 PRODUCT_PACKAGES += \
-                    android.hardware.keymaster@3.0-impl \
-                    android.hardware.keymaster@3.0-service
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service
 # IDC
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/idc/uinput-fpc.idc:system/usr/idc/uinput-fpc.idc
@@ -230,7 +215,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service \
-    lights.msm8953
+    lights.$(TARGET_BOARD_PLATFORM)
 
 # Display Calibration
 PRODUCT_PACKAGES += \
@@ -242,32 +227,14 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service.widevine
 
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/configs/qdcm_calib_data_mipi_mot_vid_boe_1080p_520.xml:system/vendor/etc/qdcm_calib_data_mipi_mot_vid_boe_1080p_520.xml \
-#    $(LOCAL_PATH)/configs/qdcm_calib_data_mipi_mot_vid_tianma_1080p_520.xml:system/vendor/etc/qdcm_calib_data_mipi_mot_vid_tianma_1080p_520.xml
-
 # Media
 PRODUCT_PACKAGES += \
     libc2dcolorconvert
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/vendor/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media_codecs_performance.xml:system/vendor/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/vendor/etc/media_profiles_vendor.xml \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
-
-PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/vendor/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/vendor/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/vendor/etc/media_codecs_google_video.xml
-
-# NFC
-PRODUCT_COPY_FILES += \
-    frameworks/base/nfc-extras/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
-    $(LOCAL_PATH)/configs/libnfc-nxp.conf:system/etc/libnfc-nxp.conf
 
 # Netutils
 PRODUCT_PACKAGES += \
@@ -275,15 +242,6 @@ PRODUCT_PACKAGES += \
     netutils-wrapper-1.0 \
     libandroid_net \
     libandroid_net_32
-
-PRODUCT_PACKAGES += \
-    libnfc \
-    libnfc_jni \
-    nfc_nci.msm8953 \
-    NfcNci \
-    Tag \
-    com.android.nfc_extras \
-    android.hardware.nfc@1.0-impl
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -327,10 +285,6 @@ PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/configs/powerhint.xml:system/etc/powerhint.xml \
      $(LOCAL_PATH)/configs/perfboostsconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perfboostsconfig.xml
 
-# Releasetools script
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/check_features.sh:system/vendor/bin/check_features.sh
-
 # RIL
 PRODUCT_PACKAGES += \
     librmnetctl \
@@ -355,27 +309,17 @@ PRODUCT_BOOT_JARS += \
     telephony-ext
 
 # Sensors
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/sensors/hals.conf:system/etc/sensors/hals.conf \
-    $(LOCAL_PATH)/configs/sensors/sensor_def_qcomdev.conf:system/etc/sensors/sensor_def_qcomdev.conf
+PRODUCT_COPY_FILES += $(LOCAL_PATH)/configs/sensors/sensor_def_qcomdev.conf:system/etc/sensors/sensor_def_qcomdev.conf
 
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     libsensorhub \
     motosh \
-    sensorhub.msm8953 \
-    sensors.msm8953 \
+    sensorhub.$(TARGET_BOARD_PLATFORM) \
+    sensors.$(TARGET_BOARD_PLATFORM) \
     sensors.rp \
     sensors.tof \
     sensors.tof.vl53l0
-
-# Shims
-PRODUCT_PACKAGES += \
-    libqsap_shim
-
-# Thermal
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal-engine-potter.conf:system/vendor/etc/thermal-engine.conf
 
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \
@@ -408,7 +352,7 @@ PRODUCT_PACKAGES += \
 #Thermal
 PRODUCT_PACKAGES += android.hardware.thermal@1.0-impl \
                     android.hardware.thermal@1.0-service \
-                    thermal.msm8953
+                    thermal.$(TARGET_BOARD_PLATFORM)
 
 PRODUCT_PACKAGES += \
     libcurl \
@@ -419,25 +363,11 @@ PRODUCT_PACKAGES += \
     wcnss_service \
     libwpa_client
 
-# Wifi Symlinks
-PRODUCT_PACKAGES += \
-    WCNSS_qcom_cfg.ini \
-    WCNSS_qcom_wlan_nv.bin \
-    WCNSS_qcom_wlan_nv_Argentina.bin \
-    WCNSS_qcom_wlan_nv_Brazil.bin \
-    WCNSS_qcom_wlan_nv_India.bin \
-    WCNSS_wlan_dictionary.dat
-
 PRODUCT_COPY_FILES += \
-    kernel/motorola/msm8953/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_cfg.dat \
+    kernel/motorola/msm8953-common/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_cfg.ini
-
-# ZAF
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/zaf/zaf_mot_imx362.json:system/etc/zaf/zaf_mot_imx362.json \
-    $(LOCAL_PATH)/configs/zaf/zaf_mot_s5k2l7.json:system/etc/zaf/zaf_mot_s5k2l7.json
 
 # TEMP FIX
 PRODUCT_PACKAGES += \
