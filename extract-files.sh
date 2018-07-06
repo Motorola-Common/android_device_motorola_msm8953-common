@@ -18,9 +18,6 @@
 
 set -e
 
-COMMON_DEVICE=8953-common
-VENDOR=motorola
-
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
@@ -34,8 +31,8 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-# Default to NOT sanitizing the vendor folder before extraction
-CLEAN_VENDOR=false
+# Default to sanitizing the vendor folder before extraction
+CLEAN_VENDOR=true
 
 while [ "$1" != "" ]; do
     case $1 in
@@ -66,7 +63,6 @@ if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
     setup_vendor "$DEVICE" "$VENDOR" "$LINEAGE_ROOT" false "$CLEAN_VENDOR"
 
     extract "$MY_DIR"/../$DEVICE/proprietary-files.txt "$SRC" "$SECTION"
-    extract "$MY_DIR"/../$DEVICE/proprietary-files64.txt "$SRC" "$SECTION"
 fi
 
 "$MY_DIR"/setup-makefiles.sh
