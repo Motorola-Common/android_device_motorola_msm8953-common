@@ -27,8 +27,6 @@ allow init firmware_file:dir mounton;
 
 allow init fm_radio_device:chr_file write;
 
-allow init system_file:system module_load;
-
 # ptt_socket_app
 allow init dnsproxyd_socket:sock_file write;
 allow init netd:unix_stream_socket connectto;
@@ -36,9 +34,6 @@ allow init self:netlink_socket { read write getattr connect };
 
 allow init debugfs:file write;
 allow init persist_file:filesystem { getattr mount relabelfrom relabelto unmount };
-
-# Screen off gestures
-allow init sysfs_screen_off_gestures:file { rw_file_perms setattr };
 
 allow init self:capability sys_nice;
 

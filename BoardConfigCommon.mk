@@ -1,6 +1,7 @@
 #
 # Copyright (C) 2016 The CyanogenMod Project
 #               2017 The LineageOS Project
+#               2018 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,25 +15,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
--include vendor/motorola/potter/BoardConfigVendor.mk
+-include vendor/motorola/msm8953-common/BoardConfigVendor.mk
 
-DEVICE_PATH := device/motorola/potter
+PLATFORM_PATH := device/motorola/msm8953-common
 
-TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
+TARGET_SPECIFIC_HEADER_PATH := $(PLATFORM_PATH)/include
 
 BOARD_VENDOR := motorola-qcom
 
 WITH_LINEAGE_CHARGER := false
 
 # AIDs and CAPS
-TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
-
-# Platform
-TARGET_BOARD_PLATFORM := msm8953
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno506
+TARGET_FS_CONFIG_GEN := $(PLATFORM_PATH)/config.fs
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := MSM8953
 TARGET_NO_BOOTLOADER := true
 
 # Architecture
@@ -49,9 +45,6 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 TARGET_USES_64_BIT_BINDER := true
 
-# Asserts
-TARGET_OTA_ASSERT_DEVICE := potter,potter_retail
-
 # Enable dexpreopt to speed boot time
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
@@ -67,10 +60,6 @@ TARGET_NO_RPC := true
 USE_DEVICE_SPECIFIC_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_potter
-TARGET_RECOVERY_DEVICE_MODULES := libinit_potter
-
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=30 msm_rtb.filter=0x237
 BOARD_KERNEL_CMDLINE += ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 vmalloc=350M androidboot.selinux=permissive
@@ -83,10 +72,7 @@ BOARD_DTBTOOL_ARGS := --force-v3 --motorola 1
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_CONFIG := potter_defconfig
-TARGET_KERNEL_SOURCE := kernel/motorola/msm8953
-TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_USE_SDCLANG := true
+TARGET_KERNEL_SOURCE := kernel/motorola/msm8953-common
 
 # Audio
 AUDIO_FEATURE_ENABLED_ALAC_OFFLOAD := true
@@ -120,7 +106,7 @@ USE_CUSTOM_AUDIO_POLICY := 1
 USE_XML_AUDIO_POLICY_CONF := 1
 
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(PLATFORM_PATH)/bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 
@@ -132,9 +118,6 @@ BOARD_QTI_CAMERA_32BIT_ONLY := true
 BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_NO_CHARGER_LED := true
-
-# DT2W
-TARGET_TAP_TO_WAKE_NODE := "/sys/android_touch/doubletap2wake"
 
 # Crypto
 TARGET_HW_DISK_ENCRYPTION := true
@@ -148,10 +131,7 @@ TARGET_USES_GRALLOC1 := true
 TARGET_USES_ION := true
 TARGET_USES_HWC2 := true
 TARGET_USES_OVERLAY := true
-TARGET_USES_NEW_ION_API := true
 USE_OPENGL_RENDERER := true
-MAX_EGL_CACHE_KEY_SIZE := 12*1024
-MAX_EGL_CACHE_SIZE := 2048*1024
 TARGET_USES_C2D_COMPOSITION := true
 MAX_VIRTUAL_DISPLAY_DIMENSION := 4096
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
@@ -172,24 +152,17 @@ TARGET_PROVIDES_LIBLIGHT := true
 
 # Lineage Hardware
 BOARD_HARDWARE_CLASS += \
-    $(DEVICE_PATH)/lineagehw
+    $(PLATFORM_PATH)/lineagehw
 
 # Manifest
-DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/configs/manifest.xml
-DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/configs/compatibility_matrix.xml
-
-# NFC
-NXP_CHIP_TYPE := PN551
-BOARD_NFC_HAL_SUFFIX := $(TARGET_BOARD_PLATFORM)
+DEVICE_MANIFEST_FILE := $(PLATFORM_PATH)/configs/manifest.xml
+DEVICE_MATRIX_FILE   := $(PLATFORM_PATH)/configs/compatibility_matrix.xml
 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216        #    16384 * 1024 mmcblk0p37
-BOARD_CACHEIMAGE_PARTITION_SIZE := 260014080      #   253920 * 1024 mmcblk0p52
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 33554432    #    16484 * 1024 mmcblk0p38
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3510353920    #  3428080 * 1024 mmcblk0p53
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 26401026048 # 25782252 * 1024 mmcblk0p54
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
@@ -200,20 +173,22 @@ TARGET_HAS_NO_WIFI_STATS := true
 # QC flags
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QC_TIME_SERVICES := true
+TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
+
+# Properties
+BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
+TARGET_VENDOR_PROP += $(PLATFORM_PATH)/vendor.prop
 
 # Recovery
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.recovery
+TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/etc/fstab.recovery
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 LZMA_RAMDISK_TARGETS := recovery
 
-# Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)/releasetools
-
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
-BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy/vendor
 
 # Sensor
 BOARD_USES_MOT_SENSOR_HUB := true
@@ -228,6 +203,7 @@ MOT_SENSOR_HUB_FEATURE_LIFT := true
 MOT_SENSOR_HUB_FEATURE_PEDO := true
 MOT_SENSOR_HUB_FEATURE_LA := true
 MOT_SENSOR_HUB_FEATURE_GR := true
+USE_SENSOR_MULTI_HAL := true
 
 # Thermal
 USE_DEVICE_SPECIFIC_THERMAL := true
@@ -245,10 +221,8 @@ WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_P2P          := "p2p"
 WPA_SUPPLICANT_VERSION           := VER_0_8_X
 
-# Split selinux policy
+# inherit from the proprietary version
+-include vendor/motorola/msm8953-common/BoardConfigVendor.mk
 
+# Treble
 TARGET_COPY_OUT_VENDOR := vendor
-BOARD_VENDORIMAGE_PARTITION_SIZE := 665845760
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
-TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
