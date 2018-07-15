@@ -319,14 +319,7 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_COPY_FILES += $(LOCAL_PATH)/configs/sensors/sensor_def_qcomdev.conf:system/etc/sensors/sensor_def_qcomdev.conf
 
 PRODUCT_PACKAGES += \
-    android.hardware.sensors@1.0-impl \
-    libsensorhub \
-    motosh \
-    sensorhub.$(TARGET_BOARD_PLATFORM) \
-    sensors.$(TARGET_BOARD_PLATFORM) \
-    sensors.rp \
-    sensors.tof \
-    sensors.tof.vl53l0
+    android.hardware.sensors@1.0-impl
 
 # TextClassifier smart selection model files
 PRODUCT_PACKAGES += \
