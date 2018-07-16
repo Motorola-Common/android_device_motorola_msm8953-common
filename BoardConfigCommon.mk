@@ -220,8 +220,10 @@ WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_P2P          := "p2p"
 WPA_SUPPLICANT_VERSION           := VER_0_8_X
 
-# inherit from the proprietary version
--include vendor/motorola/msm8953-common/BoardConfigVendor.mk
-
 # Treble
 TARGET_COPY_OUT_VENDOR := vendor
+PRODUCT_FULL_TREBLE_OVERRIDE := true
+PRODUCT_COMPATIBILITY_MATRIX_LEVEL_OVERRIDE := 27
+
+# inherit from the proprietary version
+-include vendor/motorola/msm8953-common/BoardConfigVendor.mk
