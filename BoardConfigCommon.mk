@@ -133,6 +133,7 @@ BOARD_NO_CHARGER_LED := true
 
 # Crypto
 TARGET_HW_DISK_ENCRYPTION := true
+TARGET_CRYPTFS_HW_PATH := $(PLATFORM_PATH)/cryptfs_hw
 
 # Display
 BOARD_USES_ADRENO := true
@@ -192,6 +193,7 @@ LZMA_RAMDISK_TARGETS := recovery
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy
+include vendor/omni/sepolicy/sepolicy.mk
 
 # Sensor
 USE_SENSOR_MULTI_HAL := true
@@ -211,6 +213,9 @@ WIFI_DRIVER_FW_PATH_AP           := "ap"
 WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_P2P          := "p2p"
 WPA_SUPPLICANT_VERSION           := VER_0_8_X
+
+# create some directories and symlinks
+BOARD_ROOT_EXTRA_FOLDERS := firmware persist dsp fsg
 
 # inherit from the proprietary version
 -include vendor/motorola/msm8953-common/BoardConfigVendor.mk

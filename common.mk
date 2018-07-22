@@ -99,7 +99,7 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     libbson \
-    Snap \
+    SnapdragonCamera \
     camera.device@1.0-impl \
     camera.device@3.2-impl \
     android.hardware.camera.provider@2.4-impl \
@@ -263,8 +263,7 @@ PRODUCT_PACKAGES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.1-service-qti \
-    android.hardware.power@1.0-service \
+    android.hardware.power@1.0-service.moto \
     android.hardware.power@1.0-impl
 
 # Qualcomm

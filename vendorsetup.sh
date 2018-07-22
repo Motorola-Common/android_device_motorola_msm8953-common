@@ -1,6 +1,6 @@
-add_lunch_combo aosp_cedric-userdebug
-add_lunch_combo aosp_cedric-eng
-add_lunch_combo aosp_montana-userdebug
-add_lunch_combo aosp_montana-eng
-add_lunch_combo aosp_potter-userdebug
-add_lunch_combo aosp_potter-eng
+add_lunch_combo omni_cedric-userdebug
+add_lunch_combo omni_cedric-eng
+add_lunch_combo omni_montana-userdebug
+add_lunch_combo omni_montana-eng
+add_lunch_combo omni_potter-userdebug
+add_lunch_combo omni_potter-eng
